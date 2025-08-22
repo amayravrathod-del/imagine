@@ -258,6 +258,13 @@ try {
         <div class="data-section">
             <h3><i class="fas fa-table"></i> House Plan Submissions (<?php echo count($submissions); ?> records)</h3>
             
+            <div class="refresh-section">
+                <button onclick="location.reload()" class="refresh-btn">
+                    <i class="fas fa-sync-alt"></i> Refresh Data
+                </button>
+                <span class="last-updated">Last updated: <?php echo date('Y-m-d H:i:s'); ?></span>
+            </div>
+            
             <?php if (empty($submissions)): ?>
                 <div class="no-data">
                     <i class="fas fa-inbox"></i>
@@ -331,6 +338,18 @@ try {
         </div>
     </div>
 
+    <script>
+        // Auto-refresh every 30 seconds
+        setInterval(function() {
+            const refreshBtn = document.querySelector('.refresh-btn i');
+            if (refreshBtn) {
+                refreshBtn.classList.add('fa-spin');
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            }
+        }, 30000);
+    </script>
     <script src="admin.js"></script>
 </body>
 </html>

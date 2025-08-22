@@ -87,17 +87,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Payment modal functionality
     const payNowBtn = document.getElementById('payNowBtn');
     const paymentModal = document.getElementById('paymentModal');
-    const upiBtn = document.querySelector('.upi-btn');
     
     if (payNowBtn) {
         payNowBtn.addEventListener('click', () => {
-            paymentModal.style.display = 'block';
-        });
-    }
-    
-    if (upiBtn) {
-        upiBtn.addEventListener('click', (e) => {
-            e.preventDefault();
             paymentModal.style.display = 'block';
         });
     }
@@ -142,6 +134,29 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// Function to open payment modal
+function openPaymentModal() {
+    const paymentModal = document.getElementById('paymentModal');
+    paymentModal.style.display = 'block';
+}
+
+// Function to copy UPI ID
+function copyUPIId() {
+    const upiId = 'imaginehome@upi';
+    navigator.clipboard.writeText(upiId).then(() => {
+        showSuccessMessage('UPI ID copied to clipboard!');
+    }).catch(() => {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = upiId;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showSuccessMessage('UPI ID copied to clipboard!');
+    });
+}
 
 // Success message function
 function showSuccessMessage(message) {

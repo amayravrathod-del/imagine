@@ -62,12 +62,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </button>
             </form>
             
-            <div class="login-info">
-                <p><strong>Default Credentials:</strong></p>
-                <p>Username: <code>admin</code></p>
-                <p>Password: <code>admin123</code></p>
-            </div>
-            
             <div class="back-link">
                 <a href="index.php"><i class="fas fa-arrow-left"></i> Back to Website</a>
             </div>
@@ -75,9 +69,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
     
     <div class="emergency-access">
-        <a href="bypass.php?token=emergency_access_2025" class="emergency-link">
+        <a href="javascript:void(0)" onclick="emergencyLogin()" class="emergency-link">
             <i class="fas fa-key"></i> Emergency Access
         </a>
     </div>
+    
+    <script>
+        function emergencyLogin() {
+            const token = prompt('Enter emergency access token:');
+            if (token) {
+                window.location.href = 'bypass.php?token=' + encodeURIComponent(token);
+            }
+        }
+    </script>
 </body>
 </html>

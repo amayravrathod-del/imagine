@@ -9,8 +9,10 @@ try {
     $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8mb4", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 } catch(PDOException $e) {
-    die("Connection failed: " . $e->getMessage());
+    error_log("Database connection failed: " . $e->getMessage());
+    die("Database connection failed. Please try again later.");
 }
 
 // Create tables if they don't exist
@@ -97,7 +99,7 @@ function createTables($pdo) {
             total_second INT DEFAULT 0,
             submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             status VARCHAR(20) DEFAULT 'pending'
-        )";
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
         
         $pdo->exec($sql1);
 
@@ -107,7 +109,7 @@ function createTables($pdo) {
             username VARCHAR(50) UNIQUE NOT NULL,
             password VARCHAR(255),
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )";
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
         
         $pdo->exec($sql2);
 
@@ -124,7 +126,7 @@ function createTables($pdo) {
             id INT PRIMARY KEY AUTO_INCREMENT,
             count_value INT DEFAULT 0,
             last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-        )";
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
         
         $pdo->exec($sql3);
 
@@ -135,8 +137,15 @@ function createTables($pdo) {
             $pdo->exec("INSERT INTO visitor_count (count_value) VALUES (0)");
         }
 
+        // Add indexes for better performance
+        $pdo->exec("CREATE INDEX IF NOT EXISTS idx_submission_date ON house_plans (submission_date)");
+        $pdo->exec("CREATE INDEX IF NOT EXISTS idx_status ON house_plans (status)");
+        $pdo->exec("CREATE INDEX IF NOT EXISTS idx_name ON house_plans (name)");
+        $pdo->exec("CREATE INDEX IF NOT EXISTS idx_mobile ON house_plans (mobile)");
+
     } catch(PDOException $e) {
-        die("Error creating tables: " . $e->getMessage());
+        error_log("Error creating tables: " . $e->getMessage());
+        die("Database setup error. Please contact administrator.");
     }
 }
 

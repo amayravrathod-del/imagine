@@ -100,6 +100,8 @@ body {
     font-weight: 600;
     transition: all 0.3s ease;
     box-shadow: var(--shadow);
+    border: none;
+    cursor: pointer;
 }
 
 .whatsapp-btn:hover, .upi-btn:hover {
@@ -621,6 +623,23 @@ body {
     margin-bottom: 20px;
 }
 
+.qr-code-section {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.qr-code {
+    border: 3px solid var(--white);
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.qr-instruction {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
 .upi-details p {
     font-size: 1.2rem;
     margin-bottom: 25px;
@@ -642,6 +661,8 @@ body {
     font-weight: 600;
     transition: all 0.3s ease;
     box-shadow: var(--shadow);
+    border: none;
+    cursor: pointer;
 }
 
 .payment-btn:hover {
@@ -661,6 +682,11 @@ body {
 
 .payment-btn.paytm:hover {
     background: #00BAF2;
+    color: var(--white);
+}
+
+.payment-btn.copy-btn:hover {
+    background: var(--accent-green);
     color: var(--white);
 }
 
@@ -1275,6 +1301,37 @@ body {
     margin-bottom: 20px;
 }
 
+.refresh-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: var(--light-gray);
+    border-radius: 8px;
+}
+
+.refresh-btn {
+    background: var(--primary-blue);
+    color: var(--white);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.refresh-btn:hover {
+    background: var(--secondary-blue);
+    transform: translateY(-2px);
+}
+
+.last-updated {
+    font-size: 0.9rem;
+    color: var(--dark-gray);
+}
+
 .success-message {
     background: var(--light-green);
     color: #065F46;
@@ -1437,5 +1494,25 @@ body {
     .action-buttons {
         flex-direction: column;
         gap: 5px;
+    }
+    
+    .refresh-section {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .payment-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .qr-code-section {
+        margin: 15px 0;
+    }
+    
+    .qr-code {
+        width: 150px;
+        height: 150px;
     }
 }

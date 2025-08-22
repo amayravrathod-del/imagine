@@ -35,9 +35,9 @@
                        class="whatsapp-btn animated-btn" target="_blank">
                         <i class="fab fa-whatsapp"></i> Help
                     </a>
-                    <a href="#payment" class="upi-btn">
+                    <button class="upi-btn" onclick="openPaymentModal()">
                         <i class="fas fa-mobile-alt"></i> Pay UPI
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
@@ -697,6 +697,10 @@
             <h3><i class="fas fa-credit-card"></i> Make Payment</h3>
             <div class="upi-details">
                 <p><strong>UPI ID:</strong> imaginehome@upi</p>
+                <div class="qr-code-section">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=imaginehome@upi&pn=Imagine%20Your%20Home&cu=INR" alt="UPI QR Code" class="qr-code">
+                    <p class="qr-instruction">Scan QR code with any UPI app</p>
+                </div>
                 <div class="payment-buttons">
                     <a href="upi://pay?pa=imaginehome@upi&pn=Imagine Your Home&cu=INR" class="payment-btn gpay">
                         <i class="fab fa-google-pay"></i> Google Pay
@@ -707,6 +711,9 @@
                     <a href="paytmmp://pay?pa=imaginehome@upi&pn=Imagine Your Home&cu=INR" class="payment-btn paytm">
                         <i class="fas fa-wallet"></i> Paytm
                     </a>
+                    <button onclick="copyUPIId()" class="payment-btn copy-btn">
+                        <i class="fas fa-copy"></i> Copy UPI ID
+                    </button>
                 </div>
             </div>
         </div>

@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: application/json');
 include 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -33,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         )";
         
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([
+        $result = $stmt->execute([
             $_POST['name'], $_POST['mobile'], $_POST['email'], $_POST['city'],
             $plot_shapes, $_POST['plot_length'] ?? '', $_POST['plot_width'] ?? '',
             $_POST['plot_radius'] ?? '', $_POST['margin_right'] ?? '',
@@ -69,10 +70,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_POST['total_ground'] ?? 0, $_POST['total_first'] ?? 0, $_POST['total_second'] ?? 0
         ]);
         
-        echo json_encode(['success' => true, 'message' => 'Your house plan request has been submitted successfully! You will receive your PDF plan within 72 hours.']);
+        if ($result) {
+            echo json_encode([
+                'success' => true, 
+                'message' => 'Your house plan request has been submitted successfully! You will receive your PDF plan within 72 hours.',
+                'id' => $pdo->lastInsertId()
+            ]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Failed to submit form. Please try again.']);
+        }
         
     } catch(PDOException $e) {
-        echo json_encode(['success' => false, 'message' => 'Error submitting form: ' . $e->getMessage()]);
+        error_log("Database error: " . $e->getMessage());
+        echo json_encode(['success' => false, 'message' => 'Database error occurred. Please try again later.']);
     }
 } else {
     echo json_encode(['success' => false, 'message' => 'Invalid request method']);
